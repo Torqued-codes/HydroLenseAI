@@ -1,0 +1,21 @@
+{
+  "project": "AquaGuard AI",
+  "purpose": "Water-quality anomaly detection and early-warning decision support",
+  "algorithm": "Isolation Forest",
+  "features": [
+    "pH",
+    "turbidity",
+    "tds",
+    "temperature",
+    "dissolved_oxygen",
+    "conductivity"
+  ],
+  "contamination": 0.05,
+  "random_state": 42,
+  "training_data": "Synthetic demonstration data; retrain with project dataset",
+  "output_mapping": {
+    "1": "normal",
+    "-1": "anomaly"
+  },
+  "important_note": "Detects unusual patterns; does not certify water safe/unsafe or replace laboratory testing."
+}
