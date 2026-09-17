@@ -1,0 +1,7 @@
+.dashboard-page { display: grid; gap: 28px; }
+.hero {
+  display: flex; justify-content: space-between; align-items: center; gap: 30px;
+  padding: 44px; border-radius: 24px; background: white; border: 1px solid #dce5ee;
+}
+.hero-text { max-width: 650px; font-size: 1.1rem; color: #59677a; margin-bottom: 24px; }
+.hero-water { font-size: 6rem; }

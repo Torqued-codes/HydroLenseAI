@@ -1,0 +1,10 @@
+.analysis-page { display: grid; gap: 24px; }
+.chart-card { padding: 24px; background: white; border: 1px solid #dce5ee; border-radius: 18px; }
+.chart-card h2 { margin-top: 0; }
+.chart-container { width: 100%; min-height: 300px; }
+.chart-empty { padding: 50px 20px; text-align: center; color: #687487; }
+.about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.info-card { background: white; border: 1px solid #dce5ee; border-radius: 18px; padding: 24px; }
+.info-card h2 { margin-top: 0; }
+.info-card li { margin: 10px 0; }
+@media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; } }
