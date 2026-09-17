@@ -1,0 +1,4 @@
+Generate practical next steps from an anomaly result.
+For unusual readings: verify measurement, check sensor/calibration, compare
+historical observations, and consider appropriate field/lab verification.
+For non-anomalies: continue monitoring and appropriate testing.

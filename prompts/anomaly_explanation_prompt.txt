@@ -1,0 +1,4 @@
+Explain a water-quality anomaly result.
+State whether the pattern was flagged, explain what that means relative to the
+model baseline, state limitations, and give a verification step. Do not claim
+that an anomaly proves contamination or that a non-anomaly proves safety.
