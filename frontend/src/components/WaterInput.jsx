@@ -1,82 +1,68 @@
+import { PARAMS, DEMO_DATA, validate } from "../utils/validation";
+import ParameterCard from "./ParameterCard";
+import Loading from "./Loading";
 import { useState } from "react";
-import { WATER_FIELDS, validateWaterInput } from "../utils/validation";
 
-const initialValues = {
-  pH: "",
-  turbidity_ntu: "",
-  tds_mg_l: "",
-  temperature_c: "",
-  dissolved_oxygen_mg_l: "",
-  conductivity_us_cm: ""
-};
-
-export default function WaterInput({ onSubmit, loading }) {
-  const [values, setValues] = useState(initialValues);
+export default function WaterInput({ onAnalyze }) {
+  const [values, setValues] = useState(Object.fromEntries(PARAMS.map((p) => [p.key, ""])));
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  function handleChange(event) {
-    const { name, value } = event.target;
-    setValues((current) => ({ ...current, [name]: value }));
-    setErrors((current) => ({ ...current, [name]: undefined }));
-  }
+  const update = (key, value) => {
+    setValues((current) => ({ ...current, [key]: value }));
+    setErrors((current) => ({ ...current, [key]: "" }));
+  };
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    const validation = validateWaterInput(values);
-    setErrors(validation);
-    if (Object.keys(validation).length) return;
-
-    onSubmit(
-      Object.fromEntries(
-        Object.entries(values).map(([key, value]) => [key, Number(value)])
-      )
-    );
-  }
-
-  function loadDemo() {
-    setValues({
-      pH: 6.1,
-      turbidity_ntu: 11.5,
-      tds_mg_l: 710,
-      temperature_c: 29,
-      dissolved_oxygen_mg_l: 3,
-      conductivity_us_cm: 860
-    });
+  const loadDemo = () => {
+    setValues(DEMO_DATA);
     setErrors({});
-  }
+  };
+
+  const submit = async (event) => {
+    event.preventDefault();
+    const nextErrors = validate(values);
+    if (Object.keys(nextErrors).length) {
+      setErrors(nextErrors);
+      return;
+    }
+    setLoading(true);
+    try {
+      await onAnalyze(Object.fromEntries(PARAMS.map((p) => [p.key, Number(values[p.key])])), values);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <form className="water-form" onSubmit={handleSubmit}>
-      <div className="form-header">
+    <form className="card input-card" onSubmit={submit}>
+      <div className="card-heading">
         <div>
-          <p className="eyebrow">WATER QUALITY INPUT</p>
+          <div className="section-kicker">WATER QUALITY INPUT</div>
           <h2>Enter measurements</h2>
+          <p>Provide the latest sensor or field readings for anomaly analysis.</p>
         </div>
-        <button type="button" className="secondary-button" onClick={loadDemo}>
-          Load Demo
-        </button>
+        <button type="button" className="ghost-button" onClick={loadDemo}>Load demo</button>
       </div>
 
-      <div className="input-grid">
-        {WATER_FIELDS.map((field) => (
-          <label key={field.key} className="input-field">
-            <span>{field.label}</span>
-            <input
-              name={field.key}
-              type="number"
-              step="any"
-              value={values[field.key]}
-              onChange={handleChange}
-              placeholder="Enter value"
-            />
-            {errors[field.key] && <small>{errors[field.key]}</small>}
-          </label>
+      <div className="parameter-grid">
+        {PARAMS.map((p) => (
+          <ParameterCard
+            key={p.key}
+            label={p.label}
+            unit={p.unit}
+            value={values[p.key]}
+            error={errors[p.key]}
+            onChange={(value) => update(p.key, value)}
+          />
         ))}
       </div>
 
-      <button className="primary-button" type="submit" disabled={loading}>
-        {loading ? "Analyzing..." : "Analyze Water Quality"}
-      </button>
+      <div className="form-footer">
+        <span className="form-hint">6 parameters · ML anomaly detection</span>
+        <button className="primary-button" disabled={loading}>
+          {loading ? <Loading label="Analyzing" /> : <>Analyze water quality <span>→</span></>}
+        </button>
+      </div>
     </form>
   );
 }

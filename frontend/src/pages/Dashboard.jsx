@@ -1,60 +1,68 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { analyzeWater } from "../api/api";
 import WaterInput from "../components/WaterInput";
 import AnalysisResult from "../components/AnalysisResult";
 import ChatAssistant from "../components/ChatAssistant";
-import Loading from "../components/Loading";
-import { analyzeWaterQuality } from "../api/api";
 
 export default function Dashboard() {
   const [result, setResult] = useState(null);
   const [values, setValues] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
-  async function handleAnalysis(input) {
-    setLoading(true);
+  const handleAnalyze = async (payload, rawValues) => {
     setError("");
-    setValues(input);
-
     try {
-      const response = await analyzeWaterQuality(input);
-      setResult(response);
+      const data = await analyzeWater(payload);
+      setResult(data);
+      setValues(rawValues);
     } catch (err) {
-      setResult(null);
       setError(err.message);
-    } finally {
-      setLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="page dashboard-page">
+    <>
       <section className="hero">
-        <div>
-          <p className="eyebrow">SDG 6 • CLEAN WATER AND SANITATION</p>
-          <h1>AquaGuard AI</h1>
-          <p className="hero-text">
-            Water-quality anomaly detection and explainable early-warning
-            decision support.
-          </p>
-          <button className="secondary-button" onClick={() => navigate("/about")}>
-            Learn About the System
-          </button>
+        <div className="hero-copy">
+          <div className="eyebrow"><span>SDG 6</span> · CLEAN WATER & SANITATION</div>
+          <h1>Spot unusual water patterns <em>before</em> they become surprises.</h1>
+          <p>AI-powered anomaly detection and explainable early-warning decision support for water-quality monitoring.</p>
+          <div className="hero-actions">
+            <Link className="primary-button" to="/analysis">Open analysis <span>→</span></Link>
+            <Link className="text-button" to="/about">How it works</Link>
+          </div>
         </div>
-        <div className="hero-water">💧</div>
+        <div className="hero-visual">
+          <div className="orb orb-one"></div>
+          <div className="orb orb-two"></div>
+          <div className="hero-panel">
+            <div className="mini-label">AQUAGUARD SIGNAL</div>
+            <div className="signal-line"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+            <div className="signal-value">EARLY WARNING</div>
+            <p>Pattern-based monitoring · Explainable output</p>
+          </div>
+        </div>
       </section>
 
-      <WaterInput onSubmit={handleAnalysis} loading={loading} />
+      <div className="stat-strip">
+        <div><strong>6</strong><span>water parameters</span></div>
+        <div><strong>ML</strong><span>anomaly detection</span></div>
+        <div><strong>RAG</strong><span>guidance layer</span></div>
+        <div><strong>SDG 6</strong><span>primary alignment</span></div>
+      </div>
 
-      {loading && <Loading />}
+      {error && <div className="error-box page-error">{error}</div>}
 
-      {error && <div className="error-box">{error}</div>}
-
-      {result && values && <AnalysisResult result={result} values={values} />}
-
-      <ChatAssistant />
-    </div>
+      <section className="workspace">
+        <div>
+          <WaterInput onAnalyze={handleAnalyze} />
+          <ChatAssistant />
+        </div>
+        <div>
+          <AnalysisResult result={result} values={values} />
+        </div>
+      </section>
+    </>
   );
 }

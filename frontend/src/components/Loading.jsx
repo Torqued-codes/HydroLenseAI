@@ -1,8 +1,8 @@
-export default function Loading({ text = "Analyzing water quality..." }) {
+export default function Loading({ label = "Analyzing…" }) {
   return (
-    <div className="loading">
-      <span className="spinner" />
-      <span>{text}</span>
+    <div className="loading-inline">
+      <span className="spinner"></span>
+      <span>{label}</span>
     </div>
   );
 }

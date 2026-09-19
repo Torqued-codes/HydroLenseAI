@@ -1,12 +1,18 @@
-export default function ParameterCard({ label, value, unit, icon }) {
+export default function ParameterCard({ label, unit, value, onChange, error }) {
   return (
-    <div className="parameter-card">
-      <div className="parameter-icon">{icon}</div>
-      <div>
-        <p className="parameter-label">{label}</p>
-        <strong className="parameter-value">{value ?? "—"}</strong>
-        {unit && <span className="parameter-unit">{unit}</span>}
-      </div>
-    </div>
+    <label className={`parameter-card ${error ? "has-error" : ""}`}>
+      <span className="parameter-label">{label}</span>
+      <span className="parameter-input-row">
+        <input
+          type="number"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          step="any"
+          placeholder="0.0"
+        />
+        <span>{unit}</span>
+      </span>
+      {error && <small className="field-error">{error}</small>}
+    </label>
   );
 }

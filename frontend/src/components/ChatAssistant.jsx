@@ -1,73 +1,57 @@
 import { useState } from "react";
-import { sendChatMessage } from "../api/api";
+import { askAssistant } from "../api/api";
 import Loading from "./Loading";
 
 export default function ChatAssistant() {
   const [question, setQuestion] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  async function handleSubmit(event) {
+  const ask = async (event) => {
     event.preventDefault();
-    if (!question.trim() || loading) return;
-
-    const currentQuestion = question.trim();
-    setMessages((m) => [...m, { role: "user", text: currentQuestion }]);
-    setQuestion("");
+    if (!question.trim()) return;
     setLoading(true);
-
+    setError("");
     try {
-      const response = await sendChatMessage(currentQuestion);
-      setMessages((m) => [...m, {
-        role: "assistant",
-        text: response.answer,
-        sources: response.sources
-      }]);
-    } catch (error) {
-      setMessages((m) => [...m, {
-        role: "assistant",
-        text: `Error: ${error.message}`
-      }]);
+      const data = await askAssistant(question.trim());
+      setAnswer(data.answer || data.response || data.message || JSON.stringify(data));
+    } catch (err) {
+      setError(err.message);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   return (
-    <section className="chat-card">
-      <div>
-        <p className="eyebrow">RAG ASSISTANT</p>
-        <h2>Ask about water quality</h2>
+    <section className="card assistant-card">
+      <div className="assistant-header">
+        <div className="assistant-avatar">✦</div>
+        <div>
+          <div className="section-kicker">RAG ASSISTANT</div>
+          <h2>Ask about water quality</h2>
+          <p>Get guidance about anomalies, verification and monitoring.</p>
+        </div>
       </div>
 
-      <div className="chat-messages">
-        {!messages.length && (
-          <p className="chat-empty">
-            Ask a question about anomalies, verification, monitoring, or the
-            project guidance.
-          </p>
-        )}
-
-        {messages.map((message, index) => (
-          <div key={index} className={`message ${message.role}`}>
-            <strong>{message.role === "user" ? "You" : "AquaGuard AI"}</strong>
-            <p>{message.text}</p>
-          </div>
-        ))}
-
-        {loading && <Loading text="Retrieving guidance..." />}
-      </div>
-
-      <form className="chat-form" onSubmit={handleSubmit}>
+      <form className="chat-form" onSubmit={ask}>
         <input
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          placeholder="e.g. What should I do after an anomaly?"
+          placeholder="e.g. What should I do after an anomaly is detected?"
         />
-        <button className="primary-button" type="submit" disabled={loading}>
-          Ask
+        <button className="primary-button" disabled={loading}>
+          {loading ? <Loading label="Asking" /> : "Ask"}
         </button>
       </form>
+
+      {error && <div className="error-box">{error}</div>}
+      {answer && (
+        <div className="chat-answer">
+          <span className="answer-label">AquaGuard</span>
+          <p>{answer}</p>
+        </div>
+      )}
     </section>
   );
 }

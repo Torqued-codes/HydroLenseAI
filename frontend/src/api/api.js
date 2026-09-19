@@ -1,33 +1,30 @@
-const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api";
+const API_BASE = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api";
 
 async function request(path, options = {}) {
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    headers: { "Content-Type": "application/json" },
+  const response = await fetch(`${API_BASE}${path}`, {
+    headers: { "Content-Type": "application/json", ...(options.headers || {}) },
     ...options
   });
 
   const data = await response.json().catch(() => ({}));
 
   if (!response.ok) {
-    throw new Error(data.detail || "Request failed");
+    throw new Error(data.detail || data.message || "Request failed");
   }
 
   return data;
 }
 
-export function analyzeWaterQuality(values) {
+export function analyzeWater(payload) {
   return request("/analysis", {
     method: "POST",
-    body: JSON.stringify(values)
+    body: JSON.stringify(payload)
   });
 }
 
-export function sendChatMessage(question) {
+export function askAssistant(question) {
   return request("/chat", {
     method: "POST",
     body: JSON.stringify({ question })
   });
 }
-
-export { API_BASE_URL };

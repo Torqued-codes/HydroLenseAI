@@ -1,49 +1,40 @@
 import RiskCard from "./RiskCard";
-import ParameterCard from "./ParameterCard";
+import WaterChart from "./WaterChart";
 
 export default function AnalysisResult({ result, values }) {
-  if (!result) return null;
-
-  const analysis = result.analysis || {};
+  if (!result) return <RiskCard result={null} />;
 
   return (
-    <section className="result-section">
-      <div className="result-header">
-        <div>
-          <p className="eyebrow">AI ANALYSIS</p>
-          <h2>{analysis.anomaly ? "Unusual Pattern Detected" : "No Unusual Pattern Detected"}</h2>
+    <div className="results-stack">
+      <RiskCard result={result} />
+      <WaterChart values={values} />
+
+      <section className="card">
+        <div className="card-heading">
+          <div>
+            <div className="section-kicker">EXPLANATION</div>
+            <h3>Why this result was generated</h3>
+          </div>
         </div>
-        <span className={`status-badge ${analysis.anomaly ? "status-anomaly" : "status-normal"}`}>
-          {analysis.label}
-        </span>
-      </div>
+        <p className="explanation-text">{result.explanation}</p>
+      </section>
 
-      <RiskCard risk={result.risk} />
-
-      <div className="parameter-grid">
-        <ParameterCard label="pH" value={values.pH} icon="pH" />
-        <ParameterCard label="Turbidity" value={values.turbidity_ntu} unit="NTU" icon="≈" />
-        <ParameterCard label="TDS" value={values.tds_mg_l} unit="mg/L" icon="T" />
-        <ParameterCard label="Temperature" value={values.temperature_c} unit="°C" icon="°" />
-        <ParameterCard label="Dissolved Oxygen" value={values.dissolved_oxygen_mg_l} unit="mg/L" icon="O₂" />
-        <ParameterCard label="Conductivity" value={values.conductivity_us_cm} unit="µS/cm" icon="C" />
-      </div>
-
-      <div className="explanation-box">
-        <h3>Explanation</h3>
-        <p>{result.explanation}</p>
-      </div>
-
-      <div className="recommendation-box">
-        <h3>Recommended Actions</h3>
-        <ul>
+      <section className="card">
+        <div className="card-heading">
+          <div>
+            <div className="section-kicker">RECOMMENDED NEXT STEPS</div>
+            <h3>Verification checklist</h3>
+          </div>
+        </div>
+        <div className="recommendations">
           {(result.recommendations || []).map((item, index) => (
-            <li key={index}>{item}</li>
+            <div className="recommendation" key={index}>
+              <span>✓</span>
+              <p>{item}</p>
+            </div>
           ))}
-        </ul>
-      </div>
-
-      <p className="disclaimer">{result.disclaimer}</p>
-    </section>
+        </div>
+      </section>
+    </div>
   );
 }

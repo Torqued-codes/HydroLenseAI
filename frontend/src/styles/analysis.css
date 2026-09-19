@@ -1,10 +1,18 @@
-.analysis-page { display: grid; gap: 24px; }
-.chart-card { padding: 24px; background: white; border: 1px solid #dce5ee; border-radius: 18px; }
-.chart-card h2 { margin-top: 0; }
-.chart-container { width: 100%; min-height: 300px; }
-.chart-empty { padding: 50px 20px; text-align: center; color: #687487; }
-.about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.info-card { background: white; border: 1px solid #dce5ee; border-radius: 18px; padding: 24px; }
-.info-card h2 { margin-top: 0; }
-.info-card li { margin: 10px 0; }
-@media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; } }
+.about-page { padding-top:20px; }
+.about-hero { max-width:850px; padding:35px 0 48px; }
+.about-hero h1 { font-size:clamp(40px,6vw,68px); line-height:1; letter-spacing:-.06em; margin:14px 0 18px; }
+.about-hero p { color:#6d7c78; font-size:17px; line-height:1.75; max-width:730px; }
+.about-grid { display:grid; grid-template-columns:1.15fr .85fr; gap:22px; }
+.workflow { margin-top:20px; display:grid; gap:7px; }
+.workflow-item { display:grid; grid-template-columns:44px 1fr; gap:13px; padding:15px 0; border-bottom:1px solid var(--line); }
+.workflow-item:last-child { border-bottom:0; }
+.workflow-item > span { color:#8ba09a; font-weight:850; font-size:11px; padding-top:4px; }
+.workflow-item h3 { margin:0; font-size:15px; }
+.workflow-item p { margin:4px 0 0; font-size:12px; }
+.responsible-card { background:var(--deep); color:#fff; }
+.responsible-card .section-kicker { color:#82cdb5; }
+.responsible-card p { color:#aac1ba; }
+.responsible-card h2 { font-size:28px; margin-bottom:22px; }
+.responsible-card ul { list-style:none; padding:0; margin:0; display:grid; gap:12px; }
+.responsible-card li { padding:13px; border:1px solid rgba(255,255,255,.09); background:rgba(255,255,255,.045); border-radius:12px; color:#b8cbc5; font-size:12px; line-height:1.55; }
+.responsible-card strong { color:#e6f6f0; }
