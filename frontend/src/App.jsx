@@ -1,34 +1,26 @@
-import { NavLink, Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import Analysis from "./pages/Analysis";
 import About from "./pages/About";
 
-function Brand() {
-  return (
-    <NavLink to="/" className="brand">
-      <span className="brand-mark">◉</span>
-      <span>
-        <strong>AquaGuard</strong>
-        <small>AI</small>
-      </span>
-    </NavLink>
-  );
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
 }
 
 function App() {
   return (
     <div className="app-shell">
-      <header className="topbar">
-        <Brand />
-        <nav className="nav-links">
-          <NavLink to="/" end className={({ isActive }) => isActive ? "active" : ""}>Dashboard</NavLink>
-          <NavLink to="/analysis" className={({ isActive }) => isActive ? "active" : ""}>Analysis</NavLink>
-          <NavLink to="/about" className={({ isActive }) => isActive ? "active" : ""}>About</NavLink>
-        </nav>
-        <div className="status-pill"><span></span> System ready</div>
-      </header>
+      <a className="skip-link" href="#main">Skip to content</a>
+      <ScrollToTop />
+      <Navbar />
 
-      <main className="page-wrap">
+      <main className="page-wrap" id="main">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/analysis" element={<Analysis />} />

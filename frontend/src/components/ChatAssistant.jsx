@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { askAssistant } from "../api/api";
+import { friendlyError } from "../utils/format";
 import Loading from "./Loading";
+import { ChatIcon } from "./Icons";
 
 export default function ChatAssistant() {
   const [question, setQuestion] = useState("");
@@ -17,7 +19,7 @@ export default function ChatAssistant() {
       const data = await askAssistant(question.trim());
       setAnswer(data.answer || data.response || data.message || JSON.stringify(data));
     } catch (err) {
-      setError(err.message);
+      setError(friendlyError(err));
     } finally {
       setLoading(false);
     }
@@ -26,11 +28,10 @@ export default function ChatAssistant() {
   return (
     <section className="card assistant-card">
       <div className="assistant-header">
-        <div className="assistant-avatar">✦</div>
+        <span className="assistant-avatar"><ChatIcon size={18} /></span>
         <div>
-          <div className="section-kicker">RAG ASSISTANT</div>
-          <h2>Ask about water quality</h2>
-          <p>Get guidance about anomalies, verification and monitoring.</p>
+          <h2 className="panel-title panel-title--lg">Ask about water quality</h2>
+          <p className="panel-sub">Get guidance about anomalies, verification and monitoring.</p>
         </div>
       </div>
 
@@ -39,15 +40,16 @@ export default function ChatAssistant() {
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           placeholder="e.g. What should I do after an anomaly is detected?"
+          aria-label="Your question about water quality"
         />
         <button className="primary-button" disabled={loading}>
           {loading ? <Loading label="Asking" /> : "Ask"}
         </button>
       </form>
 
-      {error && <div className="error-box">{error}</div>}
+      {error && <div className="error-box" role="alert">{error}</div>}
       {answer && (
-        <div className="chat-answer">
+        <div className="chat-answer" aria-live="polite">
           <span className="answer-label">AquaGuard</span>
           <p>{answer}</p>
         </div>

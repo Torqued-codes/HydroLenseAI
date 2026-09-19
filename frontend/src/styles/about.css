@@ -1,0 +1,41 @@
+/* ==========================================================================
+   About page
+   ========================================================================== */
+.about-head h1 { max-width: 20ch; font-size: 36px; line-height: 1.1; letter-spacing: -0.025em; }
+.about-head p { margin-top: 12px; font-size: 16px; line-height: 1.65; max-width: 62ch; }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.steps--large { margin-top: 22px; }
+.steps--large li { padding: 0 0 26px 48px; }
+.steps--large li::before { left: 15.5px; top: 36px; bottom: 6px; }
+.steps--large .step-num { width: 32px; height: 32px; font-size: 14px; }
+.steps--large h3 { font-size: 17px; line-height: 32px; }
+.steps--large p { margin-top: 2px; font-size: 14px; max-width: 54ch; }
+
+/* Responsible AI: the one dark panel on the site */
+.responsible-card { background: var(--deep); border-color: var(--deep); color: #fff; }
+.responsible-label { color: #9cc6d6; font-size: 13px; font-weight: 600; }
+.responsible-card h2 { margin-top: 2px; font-size: 22px; line-height: 1.25; font-weight: 700; letter-spacing: -0.015em; }
+.responsible-card ul { list-style: none; margin: 18px 0 0; padding: 0; }
+.responsible-card li {
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  color: #c7dbe3;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.responsible-card li:last-child { padding-bottom: 0; }
+.responsible-card strong { color: #fff; font-weight: 650; }
+
+@media (max-width: 1000px) {
+  .about-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 620px) {
+  .about-head h1 { font-size: 28px; }
+}

@@ -35,11 +35,10 @@ export default function WaterInput({ onAnalyze }) {
 
   return (
     <form className="card input-card" onSubmit={submit}>
-      <div className="card-heading">
+      <div className="panel-head">
         <div>
-          <div className="section-kicker">WATER QUALITY INPUT</div>
-          <h2>Enter measurements</h2>
-          <p>Provide the latest sensor or field readings for anomaly analysis.</p>
+          <h2 className="panel-title panel-title--lg">Enter measurements</h2>
+          <p className="panel-sub">Provide the latest sensor or field readings for anomaly analysis.</p>
         </div>
         <button type="button" className="ghost-button" onClick={loadDemo}>Load demo</button>
       </div>
@@ -58,9 +57,9 @@ export default function WaterInput({ onAnalyze }) {
       </div>
 
       <div className="form-footer">
-        <span className="form-hint">6 parameters · ML anomaly detection</span>
+        <span className="form-hint">All six parameters are required.</span>
         <button className="primary-button" disabled={loading}>
-          {loading ? <Loading label="Analyzing" /> : <>Analyze water quality <span>→</span></>}
+          {loading ? <Loading label="Analyzing" /> : "Analyze water quality"}
         </button>
       </div>
     </form>

@@ -1,26 +1,238 @@
-@media (max-width: 900px) {
-  .nav-links { margin-left:0; }
-  .status-pill { display:none; }
-  .hero { grid-template-columns:1fr; gap:25px; }
-  .hero-visual { min-height:260px; }
-  .workspace, .about-grid { grid-template-columns:1fr; }
+/* ==========================================================================
+   Loading
+   ========================================================================== */
+.loading-inline { display: inline-flex; align-items: center; gap: 8px; }
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
 }
-@media (max-width: 620px) {
-  .topbar { height:68px; padding:0 5vw; }
-  .nav-links a { padding:8px; font-size:12px; }
-  .brand { font-size:15px; }
-  .brand-mark { width:30px; height:30px; }
-  .page-wrap { width:92vw; padding-top:25px; }
-  .hero { padding-top:10px; }
-  .hero h1 { font-size:43px; }
-  .hero-copy > p { font-size:14px; }
-  .stat-strip { grid-template-columns:repeat(2,1fr); }
-  .stat-strip div:nth-child(2) { border-right:0; }
-  .stat-strip div:nth-child(-n+2) { border-bottom:1px solid var(--line); }
-  .parameter-grid { grid-template-columns:1fr; }
-  .input-card .card-heading, .form-footer, .card-heading { flex-direction:column; }
-  .form-footer { align-items:stretch; }
-  .primary-button { width:100%; }
-  .chat-form { flex-direction:column; }
-  .footer { width:92vw; flex-direction:column; gap:8px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ==========================================================================
+   Measurement form
+   ========================================================================== */
+.parameter-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.parameter-card {
+  display: block;
+  padding: 11px 13px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--surface);
+  cursor: text;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.parameter-card:hover { border-color: #9fb0ba; }
+.parameter-card:focus-within { border-color: var(--lake); box-shadow: var(--focus); }
+.parameter-card.has-error { border-color: var(--alert); }
+
+.parameter-label { display: block; margin-bottom: 6px; color: var(--ink-2); font-size: 13px; font-weight: 600; }
+.parameter-input-row { display: flex; align-items: baseline; gap: 8px; }
+.parameter-input-row input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 20px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.parameter-input-row input::-webkit-outer-spin-button,
+.parameter-input-row input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.parameter-input-row input::placeholder { color: #8fa1ab; font-weight: 500; }
+.parameter-input-row span { color: var(--muted); font-size: 13px; white-space: nowrap; }
+.field-error { display: block; margin-top: 6px; color: var(--alert); font-size: 12px; font-weight: 600; }
+
+.form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.form-hint { color: var(--muted); font-size: 13px; }
+
+/* ==========================================================================
+   Risk card
+   ========================================================================== */
+.risk-card { padding: 0; overflow: hidden; }
+
+.risk-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--line);
+}
+.risk-normal .risk-banner { background: var(--ok-soft); border-bottom-color: #c9e4d8; }
+.risk-high .risk-banner { background: var(--alert-soft); border-bottom-color: #f0cbc7; }
+
+.risk-icon {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+}
+.risk-normal .risk-icon { background: var(--ok); }
+.risk-high .risk-icon { background: var(--alert); }
+
+.risk-label { display: block; color: var(--ink-2); font-size: 13px; font-weight: 600; }
+.risk-banner h2 { margin-top: 2px; font-size: 20px; line-height: 1.25; font-weight: 700; letter-spacing: -0.01em; }
+
+.risk-body { padding: 20px 22px 22px; }
+
+.risk-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.risk-meta > div { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; }
+.risk-meta > div + div { border-left: 1px solid var(--line); }
+.risk-meta span { color: var(--muted); font-size: 13px; font-weight: 600; }
+.risk-meta strong { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.risk-high .risk-meta > div:first-child strong { color: var(--alert); }
+
+.risk-explanation { margin-top: 16px; color: var(--ink-2); line-height: 1.6; }
+.risk-explanation:empty { display: none; }
+
+.notice {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--line-strong);
+  border-radius: 0 var(--radius-control) var(--radius-control) 0;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* Empty state: a dashed placeholder rather than a filled card */
+.empty-risk {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4px;
+  min-height: 260px;
+  padding: 28px;
+  border: 1px dashed var(--line-strong);
+  background: transparent;
+}
+.empty-icon { color: var(--lake); margin-bottom: 10px; }
+.empty-risk h3 { font-size: 20px; line-height: 1.25; font-weight: 700; letter-spacing: -0.01em; max-width: 22ch; }
+.empty-risk p { margin-top: 4px; color: var(--muted); max-width: 44ch; }
+
+/* ==========================================================================
+   Results stack, chart, detail blocks, checklist
+   ========================================================================== */
+.results-stack { display: flex; flex-direction: column; gap: 16px; }
+
+.chart-wrap { height: 220px; margin-top: 14px; }
+.chart-tip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 4px 14px rgba(20, 38, 47, 0.12);
+  font-size: 13px;
+}
+.chart-tip strong { font-size: 14px; }
+.chart-tip-status { color: var(--muted); }
+.chart-tip-status--below,
+.chart-tip-status--above { color: var(--watch); font-weight: 600; }
+.chart-tip-status--within { color: var(--ok); font-weight: 600; }
+
+.result-detail { display: flex; flex-direction: column; gap: 22px; }
+.detail-block + .detail-block { padding-top: 22px; border-top: 1px solid var(--line); }
+.explanation-text { margin-top: 8px; color: var(--ink-2); line-height: 1.65; white-space: pre-line; }
+
+.checklist { list-style: none; margin: 10px 0 0; padding: 0; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.checklist li:first-child { border-top: 0; padding-top: 4px; }
+.checklist-icon { flex: none; margin-top: 2px; color: var(--lake); }
+
+/* ==========================================================================
+   Assistant
+   ========================================================================== */
+.assistant-header { display: flex; align-items: flex-start; gap: 12px; }
+.assistant-avatar {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--lake-soft);
+  color: var(--lake);
+}
+
+.chat-form { display: flex; gap: 8px; margin-top: 16px; }
+.chat-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.chat-form input::placeholder { color: #8fa1ab; }
+.chat-form input:hover { border-color: #9fb0ba; }
+.chat-form input:focus { border-color: var(--lake); box-shadow: var(--focus); }
+
+.chat-answer {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-2);
+}
+.answer-label { color: var(--lake-dark); font-size: 13px; font-weight: 700; }
+.chat-answer p { margin-top: 6px; color: var(--ink-2); font-size: 14px; line-height: 1.6; white-space: pre-line; }
+
+/* ==========================================================================
+   Responsive: components
+   ========================================================================== */
+@media (max-width: 520px) {
+  .card { padding: 18px; }
+  .risk-banner { padding: 18px; }
+  .risk-body { padding: 18px; }
+  .parameter-grid { grid-template-columns: 1fr; }
+  .form-footer { flex-direction: column; align-items: stretch; }
+  .form-footer .primary-button { width: 100%; }
+  .chat-form { flex-direction: column; }
+  .panel-head { flex-wrap: wrap; }
 }

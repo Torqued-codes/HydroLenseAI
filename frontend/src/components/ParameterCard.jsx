@@ -9,6 +9,7 @@ export default function ParameterCard({ label, unit, value, onChange, error }) {
           onChange={(e) => onChange(e.target.value)}
           step="any"
           placeholder="0.0"
+          aria-invalid={Boolean(error)}
         />
         <span>{unit}</span>
       </span>
