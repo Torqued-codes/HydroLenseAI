@@ -13,7 +13,8 @@ export function formatWhen(iso) {
 export function friendlyError(err) {
   const message = err?.message || "";
   if (/failed to fetch|networkerror|load failed/i.test(message)) {
-    return "Can't reach the AquaGuard service. Check that the backend is running, then try again.";
+    return "Can't reach the HydroLense service. Check that the backend is running, then try again.";
   }
   return message || "Something went wrong. Try again.";
 }
+

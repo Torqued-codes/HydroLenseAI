@@ -5,7 +5,8 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
  * data to show. It is stored on this device only (localStorage) and is never sent anywhere.
  */
 
-const STORAGE_KEY = "aquaguard.analysis-history.v1";
+const STORAGE_KEY = "hydrolense.analysis-history.v1";
+const LEGACY_KEY = "aquaguard.analysis-history.v1"; // read once, then migrated
 const MAX_ENTRIES = 20;
 
 const AnalysisHistoryContext = createContext(null);
@@ -22,7 +23,7 @@ function isValidEntry(entry) {
 
 function loadEntries() {
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = window.localStorage.getItem(STORAGE_KEY) ?? window.localStorage.getItem(LEGACY_KEY);
     const parsed = raw ? JSON.parse(raw) : [];
     return Array.isArray(parsed) ? parsed.filter(isValidEntry).slice(0, MAX_ENTRIES) : [];
   } catch {
@@ -36,6 +37,7 @@ export function AnalysisHistoryProvider({ children }) {
   useEffect(() => {
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+      window.localStorage.removeItem(LEGACY_KEY);
     } catch {
       /* storage unavailable (private mode, quota): the log simply won't persist */
     }

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Analysis page: same content as before (input, assistant, results)
+   Analysis page: same content as before (input, assistant, results), now fluid
    ========================================================================== */
 .workspace {
   display: grid;

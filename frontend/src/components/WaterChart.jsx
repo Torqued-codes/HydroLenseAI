@@ -10,8 +10,8 @@ const SHORT_NAMES = {
   conductivity_us_cm: "Conduct."
 };
 
-const COLOR_IN_RANGE = "#0b5d7a";
-const COLOR_OUTSIDE = "#d98a1f";
+const COLOR_IN_RANGE = "#2f8f72";
+const COLOR_OUTSIDE = "#d38b1a";
 
 function ChartTooltip({ active, payload }) {
   if (!active || !payload?.length) return null;
@@ -53,15 +53,15 @@ export default function WaterChart({ values }) {
       <div className="chart-wrap">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 22, right: 4, left: 4, bottom: 0 }}>
-            <CartesianGrid vertical={false} stroke="#e3e9ed" />
-            <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: "#536874", fontSize: 12 }} />
+            <CartesianGrid vertical={false} stroke="#eadfcb" />
+            <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: "#6f5f52", fontSize: 12 }} />
             <YAxis hide domain={[0, 100]} />
-            <Tooltip content={<ChartTooltip />} cursor={{ fill: "rgba(11, 93, 122, 0.06)" }} />
+            <Tooltip content={<ChartTooltip />} cursor={{ fill: "rgba(181, 84, 31, 0.07)" }} />
             <Bar dataKey="scaled" radius={[4, 4, 0, 0]} maxBarSize={44}>
               {data.map((entry) => (
                 <Cell key={entry.name} fill={isOutside(entry.status) ? COLOR_OUTSIDE : COLOR_IN_RANGE} />
               ))}
-              <LabelList dataKey="display" position="top" style={{ fill: "#384d58", fontSize: 12, fontWeight: 600 }} />
+              <LabelList dataKey="display" position="top" style={{ fill: "#54443a", fontSize: 12, fontWeight: 600 }} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>

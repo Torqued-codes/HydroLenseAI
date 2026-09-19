@@ -50,7 +50,7 @@ export default function ChatAssistant() {
       {error && <div className="error-box" role="alert">{error}</div>}
       {answer && (
         <div className="chat-answer" aria-live="polite">
-          <span className="answer-label">AquaGuard</span>
+          <span className="answer-label">HydroLense</span>
           <p>{answer}</p>
         </div>
       )}

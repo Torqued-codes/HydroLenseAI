@@ -1,0 +1,183 @@
+/* ==========================================================================
+   Header: utility strip (info) + main bar (navigation and actions)
+   ========================================================================== */
+
+/* ---------- Utility strip ---------- */
+.utility {
+  position: relative;
+  z-index: 30; /* above the sticky main bar so the status popover is never clipped */
+  background: var(--espresso);
+  color: var(--on-espresso-muted);
+  font-size: 13px;
+}
+.utility :focus-visible { outline-color: var(--on-espresso); }
+
+.utility-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 38px; }
+.utility-tagline { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.utility-tagline span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sdg-badge {
+  flex: none;
+  padding: 1px 7px;
+  border-radius: 5px;
+  background: var(--copper);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+.utility-right { display: flex; align-items: center; gap: 18px; margin-left: auto; }
+.utility-clock { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---------- Service status (button + popover) ---------- */
+.service { position: relative; }
+.service-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 11px 4px 9px;
+  border: 1px solid rgba(239, 227, 208, 0.28);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--on-espresso);
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.15s;
+}
+.service-btn:hover { background: rgba(239, 227, 208, 0.1); }
+.service-dot { width: 8px; height: 8px; border-radius: 50%; background: #a8998a; }
+.service-btn--online .service-dot { background: #62d3a7; box-shadow: 0 0 0 3px rgba(98, 211, 167, 0.22); }
+.service-btn--offline .service-dot { background: #f2b04a; box-shadow: 0 0 0 3px rgba(242, 176, 74, 0.22); }
+.service-btn--checking .service-dot { animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity: 0.35; } }
+
+.service-popover {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  width: min(340px, 88vw);
+  padding: 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: var(--linen);
+  color: var(--ink);
+  box-shadow: 0 14px 34px rgba(42, 31, 23, 0.22);
+  font-size: 14px;
+}
+.service-popover :focus-visible { outline-color: var(--copper); }
+.service-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.service-state { font-size: 13px; font-weight: 600; }
+.service-state--online { color: var(--ok); }
+.service-state--offline { color: var(--watch); }
+.service-state--checking { color: var(--muted); }
+
+.service-list { display: grid; gap: 10px; margin: 14px 0; }
+.service-list div { display: flex; flex-direction: column; gap: 1px; }
+.service-list dt { color: var(--muted); font-size: 12px; font-weight: 600; }
+.service-list dd { font-size: 13px; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.service-help {
+  margin: 0 0 14px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--watch-mark);
+  border-radius: 0 var(--radius-control) var(--radius-control) 0;
+  background: var(--watch-soft);
+  color: var(--watch);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ---------- Main bar ---------- */
+.mainbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--linen);
+  border-bottom: 1px solid var(--line);
+}
+.mainbar-inner { display: flex; align-items: center; gap: 36px; height: 66px; }
+
+.brand { display: flex; align-items: center; gap: 11px; font-size: 19px; font-weight: 700; letter-spacing: -0.015em; }
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--espresso);
+  color: var(--on-espresso);
+}
+.brand-mark .lens-drop { fill: var(--copper-glow); }
+.brand-name { display: inline-flex; align-items: center; gap: 6px; }
+.brand-name small {
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: var(--copper-soft);
+  color: var(--copper-dark);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.nav-links { display: flex; align-self: stretch; gap: 4px; }
+.nav-links a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a.active { color: var(--ink); }
+.nav-links a.active::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: -1px;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--copper);
+}
+
+.mainbar-actions { display: flex; align-items: center; gap: 14px; margin-left: auto; }
+
+.latest-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 14px 5px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--linen-2);
+  font-size: 13px;
+  white-space: nowrap;
+  transition: border-color 0.15s;
+}
+.latest-pill:hover { border-color: var(--line-strong); }
+.latest-pill-label { color: var(--muted); font-weight: 600; }
+.latest-pill-time { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.latest-pill-empty { color: var(--ink-2); font-weight: 600; }
+
+/* ==========================================================================
+   Responsive: header
+   ========================================================================== */
+@media (max-width: 1180px) {
+  .latest-pill { display: none; }
+}
+
+@media (max-width: 760px) {
+  .utility-tagline { display: none; }
+}
+
+@media (max-width: 640px) {
+  .mainbar-inner { height: auto; flex-wrap: wrap; gap: 0; padding-top: 10px; }
+  .brand { height: 40px; font-size: 18px; }
+  .mainbar-actions { height: 40px; }
+  .nav-links { order: 3; flex: 0 0 100%; height: 42px; gap: 0; margin-left: -14px; }
+}
+
+@media (max-width: 420px) {
+  .utility-clock { display: none; }
+  .utility-right { margin-left: 0; }
+}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { analyzeWater } from "../api/api";
 import { useAnalysisHistory } from "../context/AnalysisHistory";
 import { friendlyError } from "../utils/format";
+import PageHeader from "../components/PageHeader";
 import WaterInput from "../components/WaterInput";
 import AnalysisResult from "../components/AnalysisResult";
 import ChatAssistant from "../components/ChatAssistant";
@@ -26,24 +27,24 @@ export default function Analysis() {
 
   return (
     <>
-      <header className="page-head">
-        <div>
-          <h1>Analysis</h1>
-          <p>Enter a reading to check it for unusual patterns, then ask the assistant what to verify next.</p>
-        </div>
-      </header>
+      <PageHeader
+        title="Analysis"
+        description="Enter a reading to check it for unusual patterns, then ask the assistant what to verify next."
+      />
 
-      {error && <div className="error-box page-error" role="alert">{error}</div>}
+      <div className="container page-body">
+        {error && <div className="error-box page-error" role="alert">{error}</div>}
 
-      <section className="workspace">
-        <div className="workspace-col">
-          <WaterInput onAnalyze={handleAnalyze} />
-          <ChatAssistant />
-        </div>
-        <div className="workspace-col">
-          <AnalysisResult result={result} values={values} />
-        </div>
-      </section>
+        <section className="workspace">
+          <div className="workspace-col">
+            <WaterInput onAnalyze={handleAnalyze} />
+            <ChatAssistant />
+          </div>
+          <div className="workspace-col">
+            <AnalysisResult result={result} values={values} />
+          </div>
+        </section>
+      </div>
     </>
   );
 }

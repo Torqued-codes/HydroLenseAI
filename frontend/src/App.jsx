@@ -20,7 +20,7 @@ function App() {
       <ScrollToTop />
       <Navbar />
 
-      <main className="page-wrap" id="main">
+      <main className="page-main" id="main">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/analysis" element={<Analysis />} />
@@ -29,8 +29,10 @@ function App() {
       </main>
 
       <footer className="footer">
-        <span>© 2026 AquaGuard AI</span>
-        <span>SDG 6 · Clean Water & Sanitation</span>
+        <div className="container footer-inner">
+          <span>© 2026 HydroLense AI</span>
+          <span>SDG 6 · Clean Water & Sanitation</span>
+        </div>
       </footer>
     </div>
   );

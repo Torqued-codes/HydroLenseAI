@@ -1,41 +1,73 @@
 /* ==========================================================================
-   About page
+   About page: built for the full width
    ========================================================================== */
-.about-head h1 { max-width: 20ch; font-size: 36px; line-height: 1.1; letter-spacing: -0.025em; }
-.about-head p { margin-top: 12px; font-size: 16px; line-height: 1.65; max-width: 62ch; }
+.about-body { display: flex; flex-direction: column; gap: 20px; }
 
-.about-grid {
+/* Workflow as a horizontal sequence with a connecting line */
+.flow {
+  list-style: none;
+  margin: 26px 0 6px;
+  padding: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: 20px;
-  align-items: start;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
 }
-
-.steps--large { margin-top: 22px; }
-.steps--large li { padding: 0 0 26px 48px; }
-.steps--large li::before { left: 15.5px; top: 36px; bottom: 6px; }
-.steps--large .step-num { width: 32px; height: 32px; font-size: 14px; }
-.steps--large h3 { font-size: 17px; line-height: 32px; }
-.steps--large p { margin-top: 2px; font-size: 14px; max-width: 54ch; }
-
-/* Responsible AI: the one dark panel on the site */
-.responsible-card { background: var(--deep); border-color: var(--deep); color: #fff; }
-.responsible-label { color: #9cc6d6; font-size: 13px; font-weight: 600; }
-.responsible-card h2 { margin-top: 2px; font-size: 22px; line-height: 1.25; font-weight: 700; letter-spacing: -0.015em; }
-.responsible-card ul { list-style: none; margin: 18px 0 0; padding: 0; }
-.responsible-card li {
-  padding: 14px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-  color: #c7dbe3;
+.flow li { position: relative; padding-right: 28px; }
+.flow li::before {
+  content: "";
+  position: absolute;
+  top: 17px;
+  left: 46px;
+  right: 10px;
+  height: 1px;
+  background: var(--line-strong);
+}
+.flow li:last-child::before { display: none; }
+.flow-num {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 14px;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: var(--linen);
+  color: var(--copper-dark);
   font-size: 14px;
-  line-height: 1.6;
+  font-weight: 700;
 }
-.responsible-card li:last-child { padding-bottom: 0; }
-.responsible-card strong { color: #fff; font-weight: 650; }
+.flow h3 { font-size: 18px; font-weight: 650; letter-spacing: -0.01em; }
+.flow p { margin-top: 6px; color: var(--muted); font-size: 14px; line-height: 1.6; max-width: 40ch; }
 
-@media (max-width: 1000px) {
-  .about-grid { grid-template-columns: minmax(0, 1fr); }
+/* Responsible AI: the one dark panel, principles laid out across the width */
+.responsible-card { background: var(--espresso); border-color: var(--espresso); color: var(--on-espresso); }
+.responsible-label { color: var(--copper-glow); font-size: 13px; font-weight: 600; }
+.responsible-card h2 { margin-top: 2px; font-size: 24px; line-height: 1.25; font-weight: 700; letter-spacing: -0.015em; }
+.principles {
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 28px;
 }
-@media (max-width: 620px) {
-  .about-head h1 { font-size: 28px; }
+.principles li {
+  padding-top: 16px;
+  border-top: 1px solid rgba(239, 227, 208, 0.22);
+  color: var(--on-espresso-muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+.principles strong { display: block; margin-bottom: 4px; color: #fff; font-size: 15px; font-weight: 650; }
+
+@media (max-width: 1100px) {
+  .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
+  .flow li:nth-child(2)::before { display: none; }
+  .principles { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 22px; }
+}
+@media (max-width: 600px) {
+  .flow { grid-template-columns: minmax(0, 1fr); }
+  .flow li::before { display: none; }
+  .principles { grid-template-columns: minmax(0, 1fr); }
 }

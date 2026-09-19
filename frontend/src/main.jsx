@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { AnalysisHistoryProvider } from "./context/AnalysisHistory";
 import "./styles/global.css";
+import "./styles/header.css";
 import "./styles/components.css";
 import "./styles/dashboard.css";
 import "./styles/analysis.css";

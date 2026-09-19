@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import ChatAssistant from "../components/ChatAssistant";
+import PageHeader from "../components/PageHeader";
 import ParameterMonitor from "../components/ParameterMonitor";
 import RecentAnalyses from "../components/RecentAnalyses";
 import StatusChip from "../components/StatusChip";
@@ -82,51 +83,59 @@ export default function Dashboard() {
 
   return (
     <>
-      <header className="page-head">
-        <div>
-          <h1>Water quality overview</h1>
-          <p>Your recent analyses, checked against indicative reference ranges.</p>
+      <PageHeader
+        title="Water quality overview"
+        description="Your recent analyses, checked against indicative reference ranges."
+        aside={
+          <ul className="legend" aria-label="Colour key">
+            <li><span className="legend-swatch legend-swatch--ok"></span>In range</li>
+            <li><span className="legend-swatch legend-swatch--watch"></span>Outside indicative range</li>
+            <li><span className="legend-swatch legend-swatch--alert"></span>Unusual pattern from the model</li>
+          </ul>
+        }
+      />
+
+      <div className="container page-body">
+        <SummaryBar entries={entries} />
+
+        <div className="dash-grid">
+          <div className="dash-main">
+            <ParameterMonitor reading={latest?.values} at={latest?.at} />
+            <RecentAnalyses entries={entries} onClear={clear} />
+          </div>
+
+          <aside className="dash-side" aria-label="Guidance">
+            <ChatAssistant />
+
+            <div className="dash-side-notes">
+              <section className="side-section">
+                <h2 className="panel-title">When a reading is flagged</h2>
+                <ul className="checklist">
+                  {FLAG_STEPS.map((step) => (
+                    <li key={step}>
+                      <CheckIcon size={18} className="checklist-icon" />
+                      <span>{step}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+
+              <section className="side-section">
+                <h2 className="panel-title">How HydroLense works</h2>
+                <ol className="steps">
+                  {WORKFLOW.map(([title, text], index) => (
+                    <li key={title}>
+                      <span className="step-num">{index + 1}</span>
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </li>
+                  ))}
+                </ol>
+                <Link className="text-button" to="/about">Read more about the approach</Link>
+              </section>
+            </div>
+          </aside>
         </div>
-        <Link className="primary-button" to="/analysis">New analysis</Link>
-      </header>
-
-      <SummaryBar entries={entries} />
-
-      <div className="dash-grid">
-        <div className="dash-main">
-          <ParameterMonitor reading={latest?.values} at={latest?.at} />
-          <RecentAnalyses entries={entries} onClear={clear} />
-        </div>
-
-        <aside className="dash-side" aria-label="Guidance">
-          <ChatAssistant />
-
-          <section className="side-section">
-            <h2 className="panel-title">When a reading is flagged</h2>
-            <ul className="checklist">
-              {FLAG_STEPS.map((step) => (
-                <li key={step}>
-                  <CheckIcon size={18} className="checklist-icon" />
-                  <span>{step}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="side-section">
-            <h2 className="panel-title">How AquaGuard works</h2>
-            <ol className="steps">
-              {WORKFLOW.map(([title, text], index) => (
-                <li key={title}>
-                  <span className="step-num">{index + 1}</span>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
-                </li>
-              ))}
-            </ol>
-            <Link className="text-button" to="/about">Read more about the approach</Link>
-          </section>
-        </aside>
       </div>
     </>
   );
