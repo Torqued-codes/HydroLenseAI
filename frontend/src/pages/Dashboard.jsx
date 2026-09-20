@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import CaseSummary from "../components/CaseSummary";
 import ChatAssistant from "../components/ChatAssistant";
 import PageHeader from "../components/PageHeader";
 import ParameterMonitor from "../components/ParameterMonitor";
@@ -9,6 +11,7 @@ import { useAnalysisHistory } from "../context/AnalysisHistory";
 import { PARAMS } from "../utils/validation";
 import { assessReading, isOutside } from "../utils/reference";
 import { formatWhen } from "../utils/format";
+import { revealElement } from "../utils/activity";
 
 const FLAG_STEPS = [
   "Measure the same sample again to rule out a handling error or a sensor glitch.",
@@ -81,6 +84,16 @@ export default function Dashboard() {
   const { entries, clear } = useAnalysisHistory();
   const latest = entries[0] ?? null;
 
+  // Which analysis the panels show: the latest one by default, or a row the user picked.
+  const [pickedId, setPickedId] = useState(null);
+  const shown = entries.find((entry) => entry.id === pickedId) ?? latest;
+  const showingLatest = shown === latest;
+
+  const pick = (id) => {
+    setPickedId(id);
+    revealElement("reading-monitor");
+  };
+
   return (
     <>
       <PageHeader
@@ -100,8 +113,21 @@ export default function Dashboard() {
 
         <div className="dash-grid">
           <div className="dash-main">
-            <ParameterMonitor reading={latest?.values} at={latest?.at} />
-            <RecentAnalyses entries={entries} onClear={clear} />
+            <ParameterMonitor
+              reading={shown?.values}
+              at={shown?.at}
+              title={showingLatest ? undefined : "Reading against reference ranges"}
+              subtitle={showingLatest ? undefined : `Showing your analysis from ${formatWhen(shown.at)}, not the latest one.`}
+              action={
+                showingLatest ? null : (
+                  <button type="button" className="ghost-button" onClick={() => setPickedId(null)}>
+                    Back to latest
+                  </button>
+                )
+              }
+            />
+            <CaseSummary entry={shown} />
+            <RecentAnalyses entries={entries} selectedId={shown?.id} onSelect={pick} onClear={clear} />
           </div>
 
           <aside className="dash-side" aria-label="Guidance">

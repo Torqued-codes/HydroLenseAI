@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { LensIcon } from "./Icons";
+import markSrc from "../assets/hydrolense-mark.png";
 import ServiceStatus from "./ServiceStatus";
 import StatusChip from "./StatusChip";
 import { useAnalysisHistory } from "../context/AnalysisHistory";
@@ -9,6 +9,7 @@ import { formatWhen } from "../utils/format";
 const LINKS = [
   { to: "/", label: "Dashboard", end: true },
   { to: "/analysis", label: "Analysis" },
+  { to: "/recent", label: "Recent", showCount: true },
   { to: "/about", label: "About" }
 ];
 
@@ -48,6 +49,8 @@ function LatestResult() {
 
 export default function Navbar() {
   const { pathname } = useLocation();
+  const { entries, questions } = useAnalysisHistory();
+  const activityCount = entries.length + questions.length;
 
   return (
     <>
@@ -68,7 +71,7 @@ export default function Navbar() {
         <div className="container mainbar-inner">
           <Link to="/" className="brand" aria-label="HydroLense AI, go to dashboard">
             <span className="brand-mark">
-              <LensIcon size={22} />
+              <img src={markSrc} alt="" width="42" height="42" />
             </span>
             <span className="brand-name">
               HydroLense<small>AI</small>
@@ -79,6 +82,11 @@ export default function Navbar() {
             {LINKS.map((link) => (
               <NavLink key={link.to} to={link.to} end={link.end}>
                 {link.label}
+                {link.showCount && activityCount > 0 && (
+                  <span className="nav-count" aria-label={`${activityCount} items`}>
+                    {activityCount > 99 ? "99+" : activityCount}
+                  </span>
+                )}
               </NavLink>
             ))}
           </nav>

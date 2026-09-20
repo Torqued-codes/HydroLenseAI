@@ -92,19 +92,18 @@
   background: var(--linen);
   border-bottom: 1px solid var(--line);
 }
-.mainbar-inner { display: flex; align-items: center; gap: 36px; height: 66px; }
+.mainbar-inner { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 36px); height: 66px; }
 
 .brand { display: flex; align-items: center; gap: 11px; font-size: 19px; font-weight: 700; letter-spacing: -0.015em; }
 .brand-mark {
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  border-radius: 10px;
-  background: var(--espresso);
-  color: var(--on-espresso);
+  flex: none;
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  border-radius: 11px;
+  background: #291c14; /* the logo's own background, so the crop is seamless */
 }
-.brand-mark .lens-drop { fill: var(--copper-glow); }
+.brand-mark img { display: block; width: 100%; height: 100%; }
 .brand-name { display: inline-flex; align-items: center; gap: 6px; }
 .brand-name small {
   padding: 1px 6px;
@@ -140,6 +139,20 @@
   background: var(--copper);
 }
 
+.nav-count {
+  margin-left: 7px;
+  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--copper-soft);
+  color: var(--copper-dark);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
 .mainbar-actions { display: flex; align-items: center; gap: 14px; margin-left: auto; }
 
 .latest-pill {
@@ -162,8 +175,17 @@
 /* ==========================================================================
    Responsive: header
    ========================================================================== */
-@media (max-width: 1180px) {
+/* Widths measured with four nav links: brand ~210px, nav ~420px, latest pill ~430px, button ~125px. */
+@media (max-width: 1399px) {
   .latest-pill { display: none; }
+}
+
+@media (max-width: 900px) {
+  /* Two rows: brand and action on top, navigation underneath */
+  .mainbar-inner { height: auto; flex-wrap: wrap; gap: 0; padding-top: 10px; }
+  .brand { height: 42px; font-size: 18px; }
+  .mainbar-actions { height: 42px; }
+  .nav-links { order: 3; flex: 0 0 100%; height: 42px; gap: 0; margin-left: -14px; }
 }
 
 @media (max-width: 760px) {
@@ -171,13 +193,21 @@
 }
 
 @media (max-width: 640px) {
-  .mainbar-inner { height: auto; flex-wrap: wrap; gap: 0; padding-top: 10px; }
-  .brand { height: 40px; font-size: 18px; }
-  .mainbar-actions { height: 40px; }
-  .nav-links { order: 3; flex: 0 0 100%; height: 42px; gap: 0; margin-left: -14px; }
+  .brand-mark { width: 38px; height: 38px; }
+  .nav-links { margin-left: -10px; }
+  .nav-links a { padding: 0 10px; font-size: 14px; }
+  .nav-links a.active::after { left: 10px; right: 10px; }
 }
 
 @media (max-width: 420px) {
   .utility-clock { display: none; }
   .utility-right { margin-left: 0; }
+  /* Very narrow phones: let the nav scroll sideways rather than overflow the page */
+  .nav-links { overflow-x: auto; scrollbar-width: none; }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-links a.active::after { bottom: 0; }
+}
+
+@media (max-width: 374px) {
+  .mainbar-actions { display: none; }
 }

@@ -8,6 +8,7 @@ import "./styles/header.css";
 import "./styles/components.css";
 import "./styles/dashboard.css";
 import "./styles/analysis.css";
+import "./styles/recent.css";
 import "./styles/about.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(

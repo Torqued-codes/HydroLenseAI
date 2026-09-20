@@ -2,20 +2,28 @@ import RangeStrip from "./RangeStrip";
 import { STATUS_TEXT, assessReading } from "../utils/reference";
 import { formatWhen } from "../utils/format";
 
-export default function ParameterMonitor({ reading, at }) {
+export default function ParameterMonitor({
+  reading,
+  at,
+  title = "Latest reading against reference ranges",
+  subtitle,
+  action
+}) {
   const rows = assessReading(reading);
+  const description =
+    subtitle ??
+    (reading
+      ? `From your analysis on ${formatWhen(at)}.`
+      : "No reading yet. The shaded band on each scale marks the indicative range.");
 
   return (
-    <section className="card monitor" aria-labelledby="monitor-title">
+    <section className="card monitor" id="reading-monitor" aria-labelledby="monitor-title">
       <div className="panel-head">
         <div>
-          <h2 className="panel-title" id="monitor-title">Latest reading against reference ranges</h2>
-          <p className="panel-sub">
-            {reading
-              ? `From your analysis on ${formatWhen(at)}.`
-              : "No reading yet. The shaded band on each scale marks the indicative range."}
-          </p>
+          <h2 className="panel-title" id="monitor-title">{title}</h2>
+          <p className="panel-sub">{description}</p>
         </div>
+        {action}
       </div>
 
       <ul className="strip-list">

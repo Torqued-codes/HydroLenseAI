@@ -52,13 +52,3 @@ export function WaveIcon({ size = 24, className }) {
     </svg>
   );
 }
-
-/* HydroLense mark: a lens ring around a drop. The drop takes its colour from CSS (.lens-drop). */
-export function LensIcon({ size = 22, className }) {
-  return (
-    <svg {...svgProps(size, className)} strokeWidth={1.8}>
-      <circle cx="12" cy="12" r="9.2" />
-      <path className="lens-drop" stroke="none" d="M12 6.6c-2.1 2.6-3.5 4.3-3.5 6.2a3.5 3.5 0 0 0 7 0c0-1.9-1.4-3.6-3.5-6.2z" />
-    </svg>
-  );
-}

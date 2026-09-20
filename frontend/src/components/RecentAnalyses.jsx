@@ -2,17 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import StatusChip from "./StatusChip";
 import { WaveIcon } from "./Icons";
-import { assessReading, isOutside } from "../utils/reference";
+import { outsideRangeLabel } from "../utils/activity";
 import { formatWhen } from "../utils/format";
 
 const VISIBLE = 5;
 
-function outsideList(values) {
-  const names = assessReading(values).filter((row) => isOutside(row.status)).map((row) => row.label);
-  return names.length ? names.join(", ") : "None";
-}
-
-export default function RecentAnalyses({ entries, onClear }) {
+export default function RecentAnalyses({ entries, selectedId, onSelect, onClear }) {
   const [confirming, setConfirming] = useState(false);
   const shown = entries.slice(0, VISIBLE);
 
@@ -26,7 +21,7 @@ export default function RecentAnalyses({ entries, onClear }) {
       <div className="panel-head">
         <div>
           <h2 className="panel-title" id="ledger-title">Recent analyses</h2>
-          <p className="panel-sub">Logged on this device only. Nothing here is uploaded.</p>
+          <p className="panel-sub">Logged on this device only. Nothing here is uploaded. Select a row to see that analysis above.</p>
         </div>
 
         {entries.length > 0 &&
@@ -64,24 +59,38 @@ export default function RecentAnalyses({ entries, onClear }) {
                   <th scope="col">Priority</th>
                   <th scope="col">Score</th>
                   <th scope="col">Outside range</th>
+                  <th scope="col"><span className="sr-only">Details</span></th>
                 </tr>
               </thead>
               <tbody>
-                {shown.map((entry) => (
-                  <tr key={entry.id}>
+                {shown.map((entry) => {
+                  const isSelected = entry.id === selectedId;
+                  return (
+                  <tr
+                    key={entry.id}
+                    className={isSelected ? "is-selected" : ""}
+                    onClick={() => onSelect(entry.id)}
+                  >
                     <td data-label="Time">{formatWhen(entry.at)}</td>
                     <td data-label="Result"><StatusChip anomaly={entry.anomaly} /></td>
                     <td data-label="Priority">{entry.priority}</td>
                     <td data-label="Score" className="num">{Number(entry.score).toFixed(3)}</td>
-                    <td data-label="Outside range">{outsideList(entry.values)}</td>
+                    <td data-label="Outside range">{outsideRangeLabel(entry.values)}</td>
+                    <td data-label="Details" className="cell-action">
+                      <button type="button" className="row-view" aria-current={isSelected ? "true" : undefined}>
+                        {isSelected ? "Shown above" : "View details"}
+                      </button>
+                    </td>
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>
-          {entries.length > VISIBLE && (
-            <p className="panel-note">Showing the latest {VISIBLE} of {entries.length} analyses.</p>
-          )}
+          <p className="panel-note">
+            {entries.length > VISIBLE ? `Showing the latest ${VISIBLE} of ${entries.length} analyses. ` : ""}
+            <Link className="inline-link" to="/recent">Open everything in Recent</Link>
+          </p>
         </>
       )}
     </section>

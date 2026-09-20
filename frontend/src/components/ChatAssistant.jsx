@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { askAssistant } from "../api/api";
 import { friendlyError } from "../utils/format";
+import { useAnalysisHistory } from "../context/AnalysisHistory";
 import Loading from "./Loading";
 import { ChatIcon } from "./Icons";
 
 export default function ChatAssistant() {
+  const { recordQuestion } = useAnalysisHistory();
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
@@ -16,8 +18,11 @@ export default function ChatAssistant() {
     setLoading(true);
     setError("");
     try {
-      const data = await askAssistant(question.trim());
-      setAnswer(data.answer || data.response || data.message || JSON.stringify(data));
+      const asked = question.trim();
+      const data = await askAssistant(asked);
+      const text = data.answer || data.response || data.message || JSON.stringify(data);
+      setAnswer(text);
+      recordQuestion(asked, text);
     } catch (err) {
       setError(friendlyError(err));
     } finally {

@@ -192,6 +192,39 @@
 .checklist-icon { flex: none; margin-top: 2px; color: var(--copper); }
 
 /* ==========================================================================
+   Case summary: the written result of one logged analysis
+   ========================================================================== */
+.case-summary { container: case / inline-size; }
+.case-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr;
+  margin-top: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.case-meta > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; padding: 12px 14px; }
+.case-meta > div + div { border-left: 1px solid var(--line); }
+.case-meta span { color: var(--muted); font-size: 13px; font-weight: 600; }
+.case-meta strong { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.case-meta .case-meta-alert { color: var(--alert); }
+.case-meta .case-meta-text { font-size: 15px; font-weight: 650; line-height: 1.4; letter-spacing: 0; }
+
+.case-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; margin-top: 20px; }
+.case-heading { font-size: 15px; font-weight: 650; }
+.case-text { margin-top: 8px; color: var(--ink-2); font-size: 14px; line-height: 1.65; white-space: pre-line; }
+.case-text + .case-text { margin-top: 10px; }
+.case-block .checklist { margin-top: 6px; }
+.case-summary .notice { margin-top: 20px; }
+
+@container case (min-width: 760px) {
+  .case-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; }
+}
+@container case (max-width: 520px) {
+  .case-meta { grid-template-columns: 1fr 1fr; }
+  .case-meta > div:nth-child(3) { grid-column: 1 / -1; border-left: 0; border-top: 1px solid var(--line); }
+}
+
+/* ==========================================================================
    Assistant
    ========================================================================== */
 .assistant-header { display: flex; align-items: flex-start; gap: 12px; }

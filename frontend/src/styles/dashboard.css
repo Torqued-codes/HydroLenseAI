@@ -140,6 +140,28 @@
 .ledger-table td:first-child { white-space: nowrap; color: var(--ink-2); }
 .ledger-table td.num { font-variant-numeric: tabular-nums; }
 
+/* Rows open that analysis in the panels above */
+.ledger-table th:first-child,
+.ledger-table td:first-child { padding-left: 12px; }
+.ledger-table tbody tr { cursor: pointer; transition: background 0.12s; }
+.ledger-table tbody tr:hover { background: var(--linen-2); }
+.ledger-table tbody tr.is-selected { background: rgba(246, 223, 204, 0.55); }
+.ledger-table tbody tr.is-selected td:first-child { box-shadow: inset 3px 0 0 var(--copper); }
+.ledger-table td.cell-action { padding-right: 8px; text-align: right; white-space: nowrap; }
+.row-view {
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  color: var(--copper-dark);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.row-view:hover { text-decoration: underline; text-underline-offset: 3px; }
+.row-view[aria-current="true"] { color: var(--muted); }
+
+#reading-monitor { scroll-margin-top: 130px; }
+
 .empty-state { display: flex; align-items: flex-start; gap: 16px; margin-top: 14px; padding: 18px; border: 1px dashed var(--line-strong); border-radius: 10px; }
 .empty-state-icon {
   flex: none;
@@ -213,7 +235,11 @@
   .ledger-table tbody,
   .ledger-table tr,
   .ledger-table td { display: block; width: 100%; }
-  .ledger-table tr { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .ledger-table tr { padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  .ledger-table td:first-child { padding-left: 0; }
+  .ledger-table tbody tr.is-selected { box-shadow: inset 3px 0 0 var(--copper); }
+  .ledger-table tbody tr.is-selected td:first-child { box-shadow: none; }
+  .ledger-table td.cell-action { padding-right: 0; }
   .ledger-table tbody tr:last-child { border-bottom: 0; }
   .ledger-table td { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 4px 0; border: 0; text-align: right; }
   .ledger-table td::before { content: attr(data-label); color: var(--muted); font-size: 13px; font-weight: 600; text-align: left; }

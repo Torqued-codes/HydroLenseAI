@@ -1,4 +1,5 @@
 import PageHeader from "../components/PageHeader";
+import logoSrc from "../assets/hydrolense-logo.png";
 
 const STEPS = [
   ["Measure", "Collect pH, turbidity, TDS, temperature, dissolved oxygen and conductivity."],
@@ -19,6 +20,7 @@ export default function About() {
     <>
       <PageHeader
         large
+        aside={<img className="about-logo" src={logoSrc} alt="HydroLense AI logo" width="329" height="383" />}
         title="A practical AI layer for water-quality monitoring."
         description="HydroLense AI combines statistical anomaly detection with retrieval-based guidance to turn water-quality measurements into a clear, repeatable early-warning workflow."
       />

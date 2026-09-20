@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import Analysis from "./pages/Analysis";
+import Recent from "./pages/Recent";
 import About from "./pages/About";
 
 function ScrollToTop() {
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/analysis" element={<Analysis />} />
+          <Route path="/recent" element={<Recent />} />
           <Route path="/about" element={<About />} />
         </Routes>
       </main>

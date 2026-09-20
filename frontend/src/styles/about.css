@@ -71,3 +71,9 @@
   .flow li::before { display: none; }
   .principles { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Logo shown in the About page band */
+.about-logo { display: block; width: 150px; height: auto; border-radius: 18px; }
+@media (max-width: 820px) {
+  .about-logo { width: 120px; }
+}
