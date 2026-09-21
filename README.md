@@ -49,6 +49,11 @@ Instead of simply asking a general-purpose AI chatbot whether a set of water mea
 
 <img width="1899" height="950" alt="image" src="https://github.com/user-attachments/assets/39f89ff5-7914-47ac-aad3-3a715395b076" />
 
+### `RAG Assistant`
+
+<img width="904" height="334" alt="image" src="https://github.com/user-attachments/assets/f03e52a1-39e5-4439-a8bc-f6018dfc912d" />
+<img width="894" height="354" alt="image" src="https://github.com/user-attachments/assets/20faaa27-ab9b-49a9-b933-4395209f05ef" />
+
 ### `Recent`
 
 <img width="1913" height="903" alt="image" src="https://github.com/user-attachments/assets/7c8bf725-baa2-400b-a7c3-eb9f34c01d85" />
