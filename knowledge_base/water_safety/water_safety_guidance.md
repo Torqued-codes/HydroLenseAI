@@ -1,6 +1,6 @@
 # Water Safety Guidance
 
-AquaGuard AI is an early-warning and decision-support system.
+HydroLense AI is an early-warning and decision-support system.
 
 - Interpret measurements in context.
 - Verify unusual sensor readings.

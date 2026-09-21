@@ -1,6 +1,6 @@
 # Water Quality Guidance Summary
 
-AquaGuard AI uses trusted water-quality guidance to explain unusual observations.
+HydroLense AI uses trusted water-quality guidance to explain unusual observations.
 
 An anomaly is a statistical indication that an observation differs from the
 model's learned baseline. It is not proof that water is safe or unsafe.
@@ -14,3 +14,5 @@ model's learned baseline. It is not proof that water is safe or unsafe.
 
 The official WHO PDF should be placed in this folder as `WHO_guidelines.pdf`.
 This summary does not replace the official source.
+
+
