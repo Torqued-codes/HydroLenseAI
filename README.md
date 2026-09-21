@@ -36,26 +36,31 @@ Instead of simply asking a general-purpose AI chatbot whether a set of water mea
 
 ## 📸 Screenshots
 
-> 🖼️ **Add your screenshots here.** Save images in `docs/screenshots/` and update the file names below.
+<div align="center">
+        
+### `Dashboard`
 
-### Dashboard
-![Dashboard](docs/screenshots/dashboard.png)
+<img width="1905" height="944" alt="image" src="https://github.com/user-attachments/assets/7b8ab270-75b9-4f8f-881d-92acd89d2040" />
+<img width="1902" height="942" alt="image" src="https://github.com/user-attachments/assets/797cce24-90ba-455e-a5e4-ac72ec3e7ef9" />
 
-### Water Analysis
-![Water Analysis](docs/screenshots/analysis.png)
+### `Analysis`
 
-### RAG Assistant
-![RAG Assistant](docs/screenshots/rag-assistant.png)
+<img width="1897" height="946" alt="image" src="https://github.com/user-attachments/assets/4d5f04c0-79ab-4d90-a091-4337fd95f783" />
 
-### More Screenshots
+<img width="1899" height="950" alt="image" src="https://github.com/user-attachments/assets/39f89ff5-7914-47ac-aad3-3a715395b076" />
 
-| Screenshot 1 | Screenshot 2 |
-|:---:|:---:|
-| ![Screenshot 1](docs/screenshots/screenshot-1.png) | ![Screenshot 2](docs/screenshots/screenshot-2.png) |
-| _Add a caption_ | _Add a caption_ |
+### `Recent`
+
+<img width="1913" height="903" alt="image" src="https://github.com/user-attachments/assets/7c8bf725-baa2-400b-a7c3-eb9f34c01d85" />
+<img width="1902" height="944" alt="image" src="https://github.com/user-attachments/assets/143cd404-46ad-43fd-9b10-7fcf92c190e7" />
+
+### `About`
+
+<img width="1919" height="909" alt="image" src="https://github.com/user-attachments/assets/783edfb6-f67a-4638-b98e-4df3fcb8ed80" />
 
 ---
-
+<div align="left">
+        
 ## 📑 Table of Contents
 
 - [Problem Statement](#-problem-statement)
@@ -551,4 +556,25 @@ The project combines machine learning, semantic retrieval, generative AI, data v
 
 ## 📄 License
 
-_Add your license information here._
+MIT License
+
+Copyright (c) 2026 Minaal Naik
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
